@@ -24,7 +24,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var socket = io.connect('127.0.0.1:3000');
+    var socket = io.connect(window.location.hostname);
 
     // Initial set of notes, loop through and add to list
     socket.on('initial feed', function(data){
