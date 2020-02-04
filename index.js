@@ -19,12 +19,11 @@ app.use(express.static(__dirname));
 
 // Define our db creds
 var db = mysql.createConnection({
-    host: 'ingordonupdb.mysql.db',
-    user: 'ingordonupdb',
-    database: 'ingordonupdb',
-    password: 'Polacco1'
+    host: 'eu-cdbr-west-02.cleardb.net',
+    user: 'bee342d89535f2',
+    database: 'heroku_2abaad4a9402161',
+    password: 'b76f5270'
 })
- 
 // Log any errors connected to the db
 db.connect(function(err){
     if (err) console.log(err)
