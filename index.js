@@ -20,6 +20,7 @@ app.use(express.static(__dirname));
 // Define our db creds
 var db = mysql.createConnection({
     host: 'eu-cdbr-west-02.cleardb.net',
+    port: '34852',
     user: 'bee342d89535f2',
     database: 'heroku_2abaad4a9402161',
     password: 'b76f5270'
