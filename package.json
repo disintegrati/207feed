@@ -9,6 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "link-preview-js": "^2.0.1",
+    "socket.io": "^2.3.0",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
     "autoprefixer": "^9.7.4",
     "bourbon": "^6.0.0",
     "browser-sync": "^2.26.7",
@@ -19,12 +24,6 @@
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "link-preview-js": "^2.0.1",
-    "mysql": "^2.18.1",
-    "socket.io": "^2.3.0",
-    "sqlite3": "^4.1.1"
-  },
-  "devDependencies": {
     "jshint": "^2.8.0"
   }
 }

@@ -38,7 +38,6 @@ io.on('connection', function(socket){
     socketCount++
     // Let all sockets know how many are connected
     io.sockets.emit('users connected', socketCount)
-    console.log('utente connesso');
  
     socket.on('disconnect', function() {
         // Decrease the socket count on a disconnect, emit
@@ -47,7 +46,7 @@ io.on('connection', function(socket){
     })
 
     socket.on('addElement', function(url){
-        console.log('sono stato chiamato');
+        console.log('Un elemento sta per essere aggiunto ... ');
         lp.getLinkPreview(url).then((res) => {
             data = {
                 url: res.url,
@@ -55,14 +54,14 @@ io.on('connection', function(socket){
                 descrizione: res.description,
                 image: res.images[0],
             }
-
-            console.log(data);
+           
             // New note added, push to all sockets and insert into db
             feed.push(data);
 
             io.emit('addElement', data);
             // Use node's db injection format to filter incoming data
             db.run("INSERT INTO feed (titolo, url, descrizione, image) VALUES (?, ?, ?, ?)", [data.titolo, data.url, data.descrizione, data.image]);
+            console.log('Un nuovo elemento è presente nel database!');
         })
     })
  
@@ -72,9 +71,8 @@ io.on('connection', function(socket){
         let sql = 'SELECT * FROM feed';
         db.each(sql,[],(err, row ) => {
             feed.push(row);
-            console.log(feed);
         },function(){
-            console.log('ho eseguito la query all\'avvio del server');
+            console.log("L'array è inizializzato, sono pronto per essere consultato");
             socket.emit('initial feed', feed)
         });
 

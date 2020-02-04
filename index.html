@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Tutto quello che passa per 207 in un unico feed."/>
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Feed | 207lab" />
+    <meta property="og:description" content="Tutto quello che passa per 207 in un unico feed." />
+    <meta property="og:site_name" content="Feed | 207lab" />
+    <meta property="og:image" content="http://www.nuovetecnologiedellarte.it/wp-content/uploads/2019/10/Meglio-Insieme_All-Togheter_2-min-1024x683.jpg" />
     <title>Feed | 207lab</title>
 </head>
 <body>
@@ -16,15 +24,39 @@
                 <p class="small">#Category</p>
             </div>
             <div class="feed__element__img">
-                <img src="https://via.placeholder.com/800x300/FF0000/FFFFFF/">
+                <img src="https://lh3.googleusercontent.com/proxy/8lGz2KN2JkKHZimk6jFMnCW-rmk4NeeKHvtO_wXl3-L3XndmvxT9xS__6ksn_y5KrnUmeLcWK6KKddzk31qteRbN5DNLovk8F4JLpvgAbXsOp8cH9r3c4xng3Z1tErUtclksNCCdrkX1GbUncxs">
             </div>
         </div> -->
     </div>
-</body>
 
+    <div id="addLink" class="addLink">
+        nuovo link
+    </div>
+
+    <div id="addLinkModal" class="modal hide">
+        <div class="modal__container">
+            <p id="closeLink" class="modal__container--close right">chiudi</p>
+            <form onsubmit="addElement()">
+                <p>Surfando nell'internet hai visto qualcosa di interessante?<br><br>
+                Condividilo con tutti gli ennettiani!</p>
+                <input id="urlToSend" type="url" placeholder="Inserisci un url">
+                <input type="submit" value="Condividi">
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('addLink').onclick = function(){
+        document.getElementById('addLinkModal').classList.toggle('hide')
+    } 
+
+    document.getElementById('closeLink').onclick = function(){
+        document.getElementById('addLinkModal').classList.toggle('hide')
+    } 
+</script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var socket = io.connect(window.location.hostname);
+    var socket = io.connect(window.location.hostname+':'+window.location.port);
 
     // Initial set of notes, loop through and add to list
     socket.on('initial feed', function(data){
@@ -35,7 +67,7 @@
                         <div class="feed__element__info">\
                             <h1>'+data[i].titolo+'</h1>\
                             <p>'+data[i].descrizione+'</p>\
-                            <p class="small">'+data[i].url+'</p>\
+                            <a href="'+data[i].url+'" class="small">'+data[i].url+'</a>\
                         </div>\
                         <div class="feed__element__img">\
                             <img src="'+data[i].image+'">\
@@ -53,7 +85,7 @@
                         <div class="feed__element__info">\
                             <h1>'+data.titolo+'</h1>\
                             <p>'+data.descrizione+'</p>\
-                            <p class="small">'+data.url+'</p>\
+                            <a href="'+data[i].url+'" class="small">'+data[i].url+'</a>\
                         </div>\
                         <div class="feed__element__img">\
                             <img src="'+data.image+'">\
@@ -62,6 +94,11 @@
         document.getElementById('feed').innerHTML += html;
     })
 
+
+    function addElement() {
+        var url = document.getElementById('urlToSend').value;
+        socket.emit('addElement',url);
+    }
 
 </script>
 </html>
