@@ -1,9 +1,20 @@
-var mysql = require('mysql')
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var lp = require('link-preview-js');
+
+var sqlite3 = require('sqlite3');
+
+
+let db = new sqlite3.Database('feed.db', (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Connected to the feed database.');
+});
+
+// db.run('CREATE TABLE feed(titolo text, url text, descrizione text, image text)');
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
@@ -17,32 +28,17 @@ app.get('/', function (req, res) {
 app.use(express.static(__dirname));
 
 
-// Define our db creds
-var db = mysql.createConnection({
-    host: 'eu-cdbr-west-02.cleardb.net',
-    port: '34852',
-    user: 'bee342d89535f2',
-    database: 'heroku_2abaad4a9402161',
-    password: 'b76f5270'
-})
-// Log any errors connected to the db
-db.connect(function(err){
-    if (err) console.log(err)
-})
- 
 // Define/initialize our global vars
 var feed = []
 var isInitFeed = false
 var socketCount = 0
-
-
-
  
 io.on('connection', function(socket){
     // Socket has connected, increase socket count
     socketCount++
     // Let all sockets know how many are connected
     io.sockets.emit('users connected', socketCount)
+    console.log('utente connesso');
  
     socket.on('disconnect', function() {
         // Decrease the socket count on a disconnect, emit
@@ -66,24 +62,22 @@ io.on('connection', function(socket){
 
             io.emit('addElement', data);
             // Use node's db injection format to filter incoming data
-            db.query("INSERT INTO feed (titolo, url, descrizione, image) VALUES (?, ?, ?, ?)", [data.titolo, data.url, data.descrizione, data.image]);
+            db.run("INSERT INTO feed (titolo, url, descrizione, image) VALUES (?, ?, ?, ?)", [data.titolo, data.url, data.descrizione, data.image]);
         })
     })
  
     //Check to see if initial query/notes are set
     if (! isInitFeed) {
         // Initial app start, run db query
-        db.query('SELECT * FROM feed')
-            .on('result', function(data){
-                // Push results onto the notes array
-                feed.push(data)
-            })
-            .on('end', function(){
-                // Only emit notes after query has been completed
-                console.log('ho eseguito la query all\'avvio del server');
-                socket.emit('initial feed', feed)
-            })
- 
+        let sql = 'SELECT * FROM feed';
+        db.each(sql,[],(err, row ) => {
+            feed.push(row);
+            console.log(feed);
+        },function(){
+            console.log('ho eseguito la query all\'avvio del server');
+            socket.emit('initial feed', feed)
+        });
+
         isInitFeed = true
     } else {
         // Initial notes already exist, send out

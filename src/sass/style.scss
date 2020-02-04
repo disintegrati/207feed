@@ -110,7 +110,14 @@ html, body {
       }
 
       & #invia {
-        display: none;
+        text-align: center;
+        font-size: 2em;
+        margin-top: 20px;
+        border: 0;
+        background-color: white;
+        color: orange;
+        padding: 20px;
+        border-radius: 10px;
       }
     }
 }
