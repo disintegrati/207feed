@@ -1,0 +1,116 @@
+@import "variables.scss";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  color:white;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+
+.feed{
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  &__element{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+    &__img{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0; 
+      right: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -999;
+
+      & img{   
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }  
+    }
+    
+    &__info{
+      position: absolute;
+      width: 70%;
+      padding: 20px;
+      bottom: 0;
+      & h1{
+        margin: 0;
+        font-size: 5rem;
+      }
+
+      & p{
+        font-size: 2rem;
+      }
+
+      & .small{
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.feed__element__img:after {
+  position: absolute;
+  content:'\A';
+  width:100%; height:100%;
+  top:0; left:0;
+  background:rgba(0,0,0,0.6);
+}
+
+.addto {
+  background: rgba(41,171,226, 1);
+    & h1 {
+      text-align: center;
+    font-family: "Bebas", Arial, sans-serif;
+    font-size: 5em;
+    }
+
+    & .addtodescription {
+      text-align: center;
+    font-family: "Bebas", Arial, sans-serif;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+
+    }
+
+    & .istruzioni {
+      text-align: center;
+    font-family: "Bebas", Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    }
+    & #inserisci {
+      text-align: center;
+      margin: 0 auto;
+      width: 500px;
+
+      & #urlToSend {
+        font-size: 1.5em;
+    border: 0;
+    padding: 5px;
+    background-color: orange;
+    color: #ffffff;
+    border-radius: 90px;
+    padding-left: 50px;
+    width: 100%;
+      }
+
+      & #invia {
+        display: none;
+      }
+    }
+}

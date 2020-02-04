@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body class="addto">
+    <h1>NTA FLUX</h1>
+    <form onsubmit="addElement()" id="inserisci">
+        <input id="urlToSend" type="url" value="http://facebook.com">
+        <input type="submit" value="send" id="invia">
+    </form>
+    <p class="addtodescription">Surfando nell'internet hai visto qualcosa di interessante?<br/>Condividilo con tutti gli ennettiani</p>
+<p class="istruzioni">Copia o scrivi l'url della pagina internet, premi invio<br/>ed unisciti al flusso!</p>
+</body>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script>
+    
+    var socket = io.connect('http://localhost:3000');
+
+    
+
+    function addElement() {
+        var url = document.getElementById('urlToSend').value;
+        socket.emit('addElement',url);
+    }
+
+    
+    
+</script>
+</html>

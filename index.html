@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Feed | 207lab</title>
+</head>
+<body>
+    <div id="feed" class="feed">
+        <!-- <div class="feed__element">
+            <div class="feed__element__info">
+                <h1>Titolo</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet non tenetur doloribus nobis quam repellat blanditiis natus deserunt labore ea harum vel corrupti, beatae enim nostrum. Repellendus unde adipisci at?</p>
+                <p class="small">#Category</p>
+            </div>
+            <div class="feed__element__img">
+                <img src="https://via.placeholder.com/800x300/FF0000/FFFFFF/">
+            </div>
+        </div> -->
+    </div>
+</body>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:3000');
+
+    // Initial set of notes, loop through and add to list
+    socket.on('initial feed', function(data){
+        var html = ''
+        for (var i = 0; i < data.length; i++){
+            // We store html as a var then add to DOM after for efficiency
+            html = '<div class="feed__element">\
+                        <div class="feed__element__info">\
+                            <h1>'+data[i].titolo+'</h1>\
+                            <p>'+data[i].descrizione+'</p>\
+                            <p class="small">'+data[i].url+'</p>\
+                        </div>\
+                        <div class="feed__element__img">\
+                            <img src="'+data[i].image+'">\
+                        </div>\
+                    </div>' + html;
+        }
+        
+        document.getElementById('feed').innerHTML = html;
+    })
+
+    // New feed emitted, add it to our list of current notes
+    socket.on('addElement', function(data){
+        var html = '';
+            html = '<div class="feed__element">\
+                        <div class="feed__element__info">\
+                            <h1>'+data.titolo+'</h1>\
+                            <p>'+data.descrizione+'</p>\
+                            <p class="small">'+data.url+'</p>\
+                        </div>\
+                        <div class="feed__element__img">\
+                            <img src="'+data.image+'">\
+                        </div>\
+                    </div>';
+        document.getElementById('feed').innerHTML += html;
+    })
+
+
+</script>
+</html>
