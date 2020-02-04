@@ -11,14 +11,14 @@
   "dependencies": {
     "link-preview-js": "^2.0.1",
     "socket.io": "^2.3.0",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.1.1",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "autoprefixer": "^9.7.4",
     "bourbon": "^6.0.0",
     "browser-sync": "^2.26.7",
     "cssnano": "^4.1.10",
-    "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-jshint": "^2.1.0",
     "gulp-postcss": "^8.0.0",
