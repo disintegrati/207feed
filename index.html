@@ -31,7 +31,7 @@
         var html = ''
         for (var i = 0; i < data.length; i++){
             // We store html as a var then add to DOM after for efficiency
-            html = '<div class="feed__element">\
+            html += '<div class="feed__element">\
                         <div class="feed__element__info">\
                             <h1>'+data[i].titolo+'</h1>\
                             <p>'+data[i].descrizione+'</p>\
@@ -40,7 +40,7 @@
                         <div class="feed__element__img">\
                             <img src="'+data[i].image+'">\
                         </div>\
-                    </div>' + html;
+                    </div>';
         }
         
         document.getElementById('feed').innerHTML = html;
